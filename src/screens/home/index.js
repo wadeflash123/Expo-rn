@@ -1,13 +1,13 @@
 import React from "react";
 import { View, StatusBar } from "react-native";
 import { Container, Button, H3, Text, Icon } from "native-base";
-import { createDrawerNavigator } from 'react-navigation';
+import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import OrderDetail from '../orderdetail/'
 
 class MyHomeScreen extends React.Component {
 
   beerBtnPress = () => {
-    this.props.navigation.navigate('Notifications')
+    this.props.navigation.navigate('OrderList')
   }
 
   render() {

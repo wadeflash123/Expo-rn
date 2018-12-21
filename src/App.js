@@ -1,10 +1,10 @@
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import MainTabNavigator from './navigation/MainTabNavigator';
+import { createAppContainer } from "react-navigation";
+import AuthNavigator from './navigation/AuthNavigator';
 
-const AppNavigator = createAppContainer(createSwitchNavigator({
+const AppNavigator = createAppContainer(
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-}));
+  AuthNavigator
+);
 
 export default AppNavigator
