@@ -67,7 +67,7 @@ export default store => next => action => {
   }
 
   const [ requestType, successType, failureType ] = types
-  // next(actionWith({ type: requestType }))
+  next(actionWith({ type: requestType }))
 
   return callApi(endpoint, fetchOptions, callBack).then(
     response => {
