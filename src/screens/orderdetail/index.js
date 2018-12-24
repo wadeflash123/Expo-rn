@@ -2,7 +2,7 @@ import React from "react";
 import { createDrawerNavigator } from 'react-navigation';
 import { View, StyleSheet, Image, SafeAreaView, Button, Text } from "react-native";
 
-class OrderDetail extends React.Component {
+export default class OrderDetail extends React.Component {
   static navigationOptions = {
     drawerLabel: 'Notifications',
     drawerIcon: ({ tintColor }) => (
@@ -33,10 +33,4 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-});
-
-export default createDrawerNavigator({
-  OrderDetail: {
-    screen: OrderDetail,
-  }
 });

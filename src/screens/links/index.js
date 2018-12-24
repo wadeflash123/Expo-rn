@@ -1,18 +1,44 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { Platform, StatusBar, ScrollView, StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
+// error: Tried to register two views with the same name GestureHandler RootView
+// import { FlatList } from 'react-navigation';
+
+const data = new Array(150).fill(0);
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
     title: 'Links',
   };
+  
+  componentDidMount() {
+    this._navListener = this.props.navigation.addListener('didFocus', () => {
+      StatusBar.setBarStyle('dark-content');
+      (Platform.OS === 'android') && StatusBar.setBackgroundColor('blue');
+    });
+  }
+
+  componentWillUnmount() {
+    this._navListener.remove();
+  }
+
+  renderItem = ({ index }) => {
+    return (
+      <View style={{ height: 50 }}>
+        <Text style={{ textAlign: 'center' }}>Item {index}</Text>
+      </View>
+    );
+  };
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-          <Text>Links </Text>
-      </ScrollView>
+      <SafeAreaView>
+        <FlatList
+          data={data}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => (item + '_' + index)}
+          contentContainerStyle={{ padding: 10 }}
+        />
+      </SafeAreaView >
     );
   }
 }

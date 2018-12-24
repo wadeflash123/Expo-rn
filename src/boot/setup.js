@@ -1,4 +1,5 @@
 import * as Expo from "expo";
+import { connect, bindActionCreators } from 'react-redux';
 import React, { Component } from "react";
 import { Root, StyleProvider, Text } from "native-base";
 
@@ -6,7 +7,7 @@ import App from "../App";
 import getTheme from "../theme/components";
 import variables from "../theme/variables/commonColor";
 
-export default class Setup extends Component {
+class Setup extends Component {
   constructor() {
     super();
     this.state = {
@@ -37,3 +38,10 @@ export default class Setup extends Component {
     );
   }
 }
+
+const mapStateToProps = (state, props) => {
+  console.log(props)
+  return {}
+}
+
+export default connect(mapStateToProps, {})(Setup);
