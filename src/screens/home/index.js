@@ -27,7 +27,7 @@ class MyHomeScreen extends React.Component {
   }
 
   listBtnPress = () => {
-    this.props.navigation.navigate('OrderList')
+    this.props.navigation.navigate('OrderList');
   }
 
   render() {

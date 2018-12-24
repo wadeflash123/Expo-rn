@@ -1,11 +1,23 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
 
+import MyHomeScreen from '../screens/home/';
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/home/';
 import LinksScreen from '../screens/links/';
 import SettingsScreen from '../screens/set/';
+import OrderDetail from '../screens/orderdetail/';
+
+const HomeScreen = createDrawerNavigator({
+  Home: {
+    screen: MyHomeScreen,
+  },
+  OrderDetail: {
+    screen: OrderDetail,
+  },
+}, {
+  drawerType: 'slide'
+});
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
