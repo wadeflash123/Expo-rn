@@ -18,19 +18,27 @@ class AuthLoading extends React.Component {
     this._getUserStatus()
   }
 
+  componentDidMount() {
+    
+  }
+
   // 登录状态检测
   _getUserStatus = async () => {
-    this.props.getIsLogin(function(res) {
-      console.log('res', res)
-    })
-    // 模拟请求
-    const userToken = await AsyncStorage.getItem('userToken');
-    setTimeout(() => {
+    this.props.getIsLogin((res) => {
+      console.log('res', res);
       this.setState({
         showIndicator: false
       })
-      this.props.navigation.navigate(userToken ? 'Auth' : 'App');
-    }, 2000)
+      this.props.navigation.navigate(res.code === 0 ? 'App' : 'Auth');
+    })
+    // 模拟请求
+    // const userToken = await AsyncStorage.getItem('userToken');
+    // setTimeout(() => {
+    //   this.setState({
+    //     showIndicator: false
+    //   })
+    //   this.props.navigation.navigate(userToken ? 'Auth' : 'App');
+    // }, 2000)
   }
 
   render() {

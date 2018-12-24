@@ -17,7 +17,7 @@ const callApi = (endpoint, fetchOptions, callBack) => {
     return fetch(fullUrl, fetchOptions)
       .then(response => 
         response.json().then(json => {
-          if (!response.ok) {
+          if (!response.ok) { // 非 200
             return Promise.reject(json)
           }
           if (typeof callBack === 'function') {
@@ -76,5 +76,11 @@ export default store => next => action => {
         type: successType
       }))
     }
-  )
+  ).catch(err => {
+    console.log('err', err)
+    next(actionWith({
+      response: err || {},
+      type: failureType
+    }))
+  })
 }
