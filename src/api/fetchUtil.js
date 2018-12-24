@@ -1,10 +1,10 @@
 const showLog = __DEV__
 
-const API_ROOT = 'http://119.28.86.192:81/qm'
+const API_ROOT = 'http://tianxiangh5.qmuitest.com/qm'
 
 export const platformKey = '3LK0V/qWsjnMe935IUgNzw=='
 
-const ERR_OK = 0
+const RES_CODE = 0
 
 const getFetch = (url, cached) => {
   const fetchFunc = () => {
@@ -84,7 +84,7 @@ const convertRespToJson = response => {
 }
 
 const defaultAnalyse = response => {
-  if (response.code === ERR_OK) {
+  if (response.code === RES_CODE) {
     return response
   } else {
     console.warn(response.message)

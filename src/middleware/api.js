@@ -1,4 +1,4 @@
-import { API_ROOT, platformKey, ERR_OK } from '../api/apiConfig'
+import { API_ROOT, platformKey, RES_CODE } from '../api/apiConfig'
 
 const getParam = data => {
   return Object.entries(data).map(([key, value]) => {

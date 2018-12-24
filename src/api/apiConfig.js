@@ -1,6 +1,6 @@
-export const API_ROOT = 'http://119.28.86.192:81'
+export const API_ROOT = 'http://tianxiangh5.qmuitest.com/qm'
 export const platformKey = '3LK0V/qWsjnMe935IUgNzw=='
-export const ERR_OK = 0
+export const RES_CODE = 0
 
 // 图形验证码
 export const captchaImgApi = API_ROOT + '/user/captcha?platformKey=' + platformKey

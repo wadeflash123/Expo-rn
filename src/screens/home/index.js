@@ -2,7 +2,6 @@ import React from "react";
 import { connect, bindActionCreators } from 'react-redux';
 import { Platform, View, StatusBar } from "react-native";
 import { Container, Button, H3, Text, Icon } from "native-base";
-import { getIsLogin } from '../../actions/user';
 
 class MyHomeScreen extends React.Component {
   constructor(props) {
@@ -15,7 +14,6 @@ class MyHomeScreen extends React.Component {
       StatusBar.setBarStyle('light-content');
       (Platform.OS === 'android') && StatusBar.setBackgroundColor('#6a51ae');
     });
-    console.log('props ', this.props.islogin)
   }
 
   componentWillUnmount() {
@@ -43,7 +41,9 @@ class MyHomeScreen extends React.Component {
             backgroundColor: "transparent"
           }}
         >
-          <H3>pppp App to showcase</H3>
+          {
+            islogin ? <Text>已登录</Text> : <H3>未登录</H3>
+          }
           <View style={{ marginTop: 8 }} />
           <H3>gggg NativeBase components </H3>
           <View style={{ marginTop: 8 }} />
@@ -70,12 +70,9 @@ class MyHomeScreen extends React.Component {
 
 const mapStateToProps = (state, props) => {
   const { user } = state
-  console.log(state)
   return {
     islogin: user.islogin
   }
 }
 
-export default connect(mapStateToProps, {
-  getIsLogin
-})(MyHomeScreen);
+export default connect(mapStateToProps, {})(MyHomeScreen);

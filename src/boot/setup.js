@@ -40,7 +40,6 @@ class Setup extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log(props)
   return {}
 }
 

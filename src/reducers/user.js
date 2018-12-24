@@ -8,7 +8,7 @@ const initState = {
 export default user = (state = initState, action) => {
   switch (action.type) {
     case ActionTypes.ISLOGIN_SUCCESS:
-      return Object.assign({}, state, {islogin: action.response.message})
+      return Object.assign({}, state, {islogin: action.response.code === 0})
     case ActionTypes.USERLOGININ_SUCCESS:
       return Object.assign({}, state, {loginInfo: action.response.data, islogin: action.response.code === 0})
     default:

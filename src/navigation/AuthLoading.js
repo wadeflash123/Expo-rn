@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -6,10 +7,11 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { getIsLogin } from '../actions/user';
 
-export default class AuthLoading extends React.Component {
-  constructor() {
-    super();
+class AuthLoading extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       showIndicator: true
     }
@@ -18,6 +20,9 @@ export default class AuthLoading extends React.Component {
 
   // 登录状态检测
   _getUserStatus = async () => {
+    this.props.getIsLogin(function(res) {
+      console.log('res', res)
+    })
     // 模拟请求
     const userToken = await AsyncStorage.getItem('userToken');
     setTimeout(() => {
@@ -25,7 +30,7 @@ export default class AuthLoading extends React.Component {
         showIndicator: false
       })
       this.props.navigation.navigate(userToken ? 'Auth' : 'App');
-    }, 3000)
+    }, 2000)
   }
 
   render() {
@@ -38,6 +43,14 @@ export default class AuthLoading extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state, props) => {
+  return {}
+}
+
+export default connect(mapStateToProps, {
+  getIsLogin
+})(AuthLoading);
 
 const styles = StyleSheet.create({
   container: {
