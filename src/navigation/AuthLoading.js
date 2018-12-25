@@ -14,8 +14,8 @@ class AuthLoading extends React.Component {
     super(props);
     this.state = {
       showIndicator: true
-    }
-    this._getUserStatus()
+    };
+    this._getUserStatus();
   }
 
   componentDidMount() {
@@ -23,14 +23,13 @@ class AuthLoading extends React.Component {
   }
 
   // 登录状态检测
-  _getUserStatus = async () => {
+  _getUserStatus = () => { // async
     this.props.getIsLogin((res) => {
-      console.log('res', res);
       this.setState({
         showIndicator: false
       })
       this.props.navigation.navigate(res.code === 0 ? 'App' : 'Auth');
-    })
+    });
     // 模拟请求
     // const userToken = await AsyncStorage.getItem('userToken');
     // setTimeout(() => {
@@ -64,4 +63,4 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'orange'
   }
-})
+});

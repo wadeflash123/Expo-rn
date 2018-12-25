@@ -1,4 +1,53 @@
-import { API_ROOT, platformKey, RES_CODE } from '../api/apiConfig'
+import axios from 'axios';
+import { API_ROOT, platformKey, RES_CODE, captchaImgApi } from '../api/apiConfig';
+import { Platform } from 'react-native';
+
+// axios 配置
+axios.defaults.withCredentials = true
+axios.defaults.timeout = 8000
+axios.defaults.retry = 2
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+// axios.defaults.baseURL = apiConfig.proxyUrl
+
+// 请求 post传参序列化
+axios.interceptors.request.use((config) => {
+  console.log('config', config)
+  return config
+}, (error) => {
+  console.warn('错误的传参', error)
+  // return Promise.reject(error)
+})
+
+// 返回 状态判断
+axios.interceptors.response.use((response) => {
+  console.log('response', response)
+  return response
+}, (err) => {
+  var config = err.config
+  // If config does not exist or the retry option is not set, reject
+  if (!config || !config.retry) return Promise.reject(err)
+  // Set the variable for keeping track of the retry count
+  config.__retryCount = config.__retryCount || 0
+  // Check if we've maxed out the total number of retries
+  if (config.__retryCount >= config.retry) {
+    // Reject with the error
+    // return Promise.reject(err)
+    console.log('already tried ' + config.__retryCount + ' times')
+    return
+  }
+  // Increase the retry count
+  config.__retryCount += 1
+  // Create new promise to handle exponential backoff
+  var backoff = new Promise(function (resolve) {
+    setTimeout(function () {
+      resolve()
+    }, config.retryDelay || 3000)
+  })
+  // Return the promise in which recalls axios to retry the request
+  return backoff.then(function () {
+    return axios(config)
+  })
+})
 
 const getParam = data => {
   return Object.entries(data).map(([key, value]) => {
@@ -6,38 +55,32 @@ const getParam = data => {
   }).join('&')
 }
 
+export const getCaptcha = function() {
+  axios.get(captchaImgApi)
+}
+
 const callApi = (endpoint, fetchOptions, callBack) => {
-  fetchOptions = Object.assign({}, fetchOptions, {credentials: 'same-origin'})
+  fetchOptions.data = Object.assign({}, fetchOptions.data, {platformKey, ua: Platform.OS, timeStamp: new Date().getTime()})
   let fullUrl = API_ROOT + endpoint
-  if (fetchOptions.method.toLowerCase() === 'get') {
-    fullUrl = fullUrl + '?platformKey=' + platformKey
-    if (fetchOptions.data) {
-      fullUrl += '&' + getParam(fetchOptions.data)
-    }
-    return fetch(fullUrl, fetchOptions)
-      .then(response => 
-        response.json().then(json => {
-          if (!response.ok) { // 非 200
-            return Promise.reject(json)
-          }
-          if (typeof callBack === 'function') {
-            callBack(json)
-          }
-          return json
-        }))
-  } else if (fetchOptions.method.toLowerCase() === 'post') {
-    fetchOptions.body = JSON.stringify(Object.assign({}, fetchOptions.body, {platformKey: platformKey}))
-    return fetch(fullUrl, fetchOptions)
-      .then(response => 
-        response.json().then(json => {
-          if (!response.ok) {
-            return Promise.reject(json)
-          }
-          if (typeof callBack === 'function') {
-            callBack(json)
-          }
-          return json
-        }))
+  if (fetchOptions.method && fetchOptions.method.toLowerCase() === 'post') {
+    return axios.post(fullUrl, fetchOptions.data)
+      .then(response => {
+        let data = response.data || {}
+        if (typeof callBack === 'function') {
+          callBack(data)
+        }
+        return data
+      })
+  } else {
+    fullUrl += '?platformKey=' + platformKey + '&ua=android&timeStamp=' + new Date().getTime()
+    return axios.get(fullUrl)
+      .then(response => {
+        let data = response.data || {}
+        if (typeof callBack === 'function') {
+          callBack(data)
+        }
+        return data
+      })
   }
 }
 

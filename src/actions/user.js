@@ -6,12 +6,7 @@ const fetchIsLogin = (cb) => ({
   [CALL_API]: {
     types: [ActionTypes.ISLOGIN_REQUEST, ActionTypes.ISLOGIN_SUCCESS, ActionTypes.ISLOGIN_FAILURE],
     endpoint: '/user/getLoginUser',
-    fetchOptions: {
-      method: 'get',
-      headers: {
-        "Content-Type": "application/json"
-      }
-    },
+    fetchOptions: {},
     callBack: cb
   }
 })
@@ -27,7 +22,7 @@ const fetchLoginIn = (data, cb) => ({
     endpoint: '/user/j_acegi_security_check',
     fetchOptions: {
       method: 'POST',
-      body: data
+      data
     },
     callBack: cb
   }
@@ -37,3 +32,16 @@ export const userLoginIn = (data, cb) => (dispatch) => {
   return dispatch(fetchLoginIn(data, cb))
 }
 
+// 退出
+const fetchLoginOut = (cb) => ({
+  [CALL_API]: {
+    types: [ActionTypes.USERLOGINOUT_REQUEST, ActionTypes.USERLOGINOUT_SUCCESS, ActionTypes.USERLOGINOUT_FAILURE],
+    endpoint: '/user/j_acegi_logout',
+    fetchOptions: {},
+    callBack: cb
+  }
+})
+
+export const userLoginOut = (cb) => (dispatch) => {
+  return dispatch(fetchLoginOut(cb))
+}
