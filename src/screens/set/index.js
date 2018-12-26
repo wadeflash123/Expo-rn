@@ -13,17 +13,21 @@ class SettingsScreen extends React.Component {
   }
 
   beerBtnPress = () => {
-    console.log('[[[[[[[[[[')
-    this.props.userLoginOut((res) => {
-      console.log('out', res)
+    this.props.userLoginOut({ cb: (res) => {
       if (res.code === 0) {
         this.props.navigation.navigate('AuthLoading')
       }
-    })
+    }})
+  }
+
+  openSetDrawer = () => {
+    this.props.navigation.openDrawer();
   }
 
   render() {
-    let { beerBtnPress } = this
+    let { beerBtnPress, openSetDrawer } = this
+    let { userBalance } = this.props
+    console.log('set balance', userBalance)
     /* Go ahead and delete ExpoConfigView and replace it with your
      * content, we just wanted to give you a quick view of your config */
     return (
@@ -35,13 +39,22 @@ class SettingsScreen extends React.Component {
           <Icon name='beer' />
           <Text>Sign Out</Text>
         </Button>
+        <Button danger rounded full
+          onPress={openSetDrawer}
+        >
+          <Icon name='beer' />
+          <Text>set drawer</Text>
+        </Button>
       </View>
     );
   }
 }
 
 const mapStateToProps = (state, props) => {
-  return {}
+  let { user } = state
+  return {
+    userBalance: user.userBalance
+  }
 }
 
 export default connect(mapStateToProps, {

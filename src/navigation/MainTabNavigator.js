@@ -58,7 +58,7 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: '我的',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -67,8 +67,16 @@ SettingsStack.navigationOptions = {
   ),
 };
 
-export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
-});
+export default createDrawerNavigator({
+  MainTabNavigator: createBottomTabNavigator({
+    HomeStack,
+    LinksStack,
+    SettingsStack,
+  }),
+  OrderDetail: {
+    screen: OrderDetail,
+  },
+  }, {
+    drawerType: 'slide'
+  }
+);

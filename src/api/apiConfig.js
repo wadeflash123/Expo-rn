@@ -1,4 +1,4 @@
-export const API_ROOT = 'http://tianxiangh5.qmuitest.com/qm'
+export const API_ROOT = 'http://tianxiang.qmuitest.com/qm'
 export const platformKey = '3LK0V/qWsjnMe935IUgNzw=='
 export const RES_CODE = 0
 

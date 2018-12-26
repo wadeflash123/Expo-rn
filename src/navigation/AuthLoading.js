@@ -6,6 +6,7 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  Text
 } from 'react-native';
 import { getIsLogin } from '../actions/user';
 
@@ -24,12 +25,13 @@ class AuthLoading extends React.Component {
 
   // 登录状态检测
   _getUserStatus = () => { // async
-    this.props.getIsLogin((res) => {
+    this.props.getIsLogin({ cb: (res) => {
+      console.log('res a', res)
       this.setState({
         showIndicator: false
       })
       this.props.navigation.navigate(res.code === 0 ? 'App' : 'Auth');
-    });
+    }});
     // 模拟请求
     // const userToken = await AsyncStorage.getItem('userToken');
     // setTimeout(() => {
@@ -46,6 +48,7 @@ class AuthLoading extends React.Component {
       <View style={styles.container}>
         <ActivityIndicator animating={showIndicator} />
         <StatusBar />
+        <Text>登录状态验证页</Text>
       </View>
     )
   }

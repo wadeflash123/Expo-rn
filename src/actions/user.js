@@ -2,7 +2,7 @@ import { CALL_API } from '../middleware/api'
 import * as ActionTypes from './actionTypes'
 
 // 检查用户登陆状态
-const fetchIsLogin = (cb) => ({
+const fetchIsLogin = ({cb}) => ({
   [CALL_API]: {
     types: [ActionTypes.ISLOGIN_REQUEST, ActionTypes.ISLOGIN_SUCCESS, ActionTypes.ISLOGIN_FAILURE],
     endpoint: '/user/getLoginUser',
@@ -11,12 +11,12 @@ const fetchIsLogin = (cb) => ({
   }
 })
 
-export const getIsLogin = (cb) => (dispatch) => {
-  return dispatch(fetchIsLogin(cb))
+export const getIsLogin = ({cb}) => (dispatch) => {
+  return dispatch(fetchIsLogin({cb}))
 }
 
 // 登陆
-const fetchLoginIn = (data, cb) => ({
+const fetchLoginIn = ({data, cb}) => ({
   [CALL_API]: {
     types: [ActionTypes.USERLOGININ_REQUEST, ActionTypes.USERLOGININ_SUCCESS, ActionTypes.USERLOGININ_FAILURE],
     endpoint: '/user/j_acegi_security_check',
@@ -28,12 +28,12 @@ const fetchLoginIn = (data, cb) => ({
   }
 })
 
-export const userLoginIn = (data, cb) => (dispatch) => {
-  return dispatch(fetchLoginIn(data, cb))
+export const userLoginIn = ({data, cb}) => (dispatch) => {
+  return dispatch(fetchLoginIn({data, cb}))
 }
 
 // 退出
-const fetchLoginOut = (cb) => ({
+const fetchLoginOut = ({cb}) => ({
   [CALL_API]: {
     types: [ActionTypes.USERLOGINOUT_REQUEST, ActionTypes.USERLOGINOUT_SUCCESS, ActionTypes.USERLOGINOUT_FAILURE],
     endpoint: '/user/j_acegi_logout',
@@ -42,6 +42,22 @@ const fetchLoginOut = (cb) => ({
   }
 })
 
-export const userLoginOut = (cb) => (dispatch) => {
-  return dispatch(fetchLoginOut(cb))
+export const userLoginOut = ({cb}) => (dispatch) => {
+  return dispatch(fetchLoginOut({cb}))
+}
+
+// 获取账户信息
+const fetchUserBalance = ({data, cb}) => ({
+  [CALL_API]: {
+    types: [ActionTypes.USERBALANCE_REQUEST, ActionTypes.USERBALANCE_SUCCESS, ActionTypes.USERBALANCE_FAILURE],
+    endpoint: '/user/getUserBalance',
+    fetchOptions: {
+      data
+    },
+    callBack: cb
+  }
+})
+
+export const userBalance = ({data, cb}) => (dispatch) => {
+  return dispatch(fetchUserBalance({data, cb}))
 }

@@ -1,5 +1,5 @@
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
-import MainTabNavigator from './MainTabNavigator'
+import MainTabNavigator from './MainTabNavigator';
 import OrderList from '../screens/orders/orderList';
 
 export default createStackNavigator({
@@ -11,6 +11,7 @@ export default createStackNavigator({
     },
     OrderList: OrderList
   }, {
-    initialRouteName: 'MainTabNavigator'
+    initialRouteName: 'MainTabNavigator',
+    headerMode: 'none'
   }
 )

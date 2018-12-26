@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 axios.defaults.withCredentials = true
 axios.defaults.timeout = 8000
 axios.defaults.retry = 2
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 // axios.defaults.baseURL = apiConfig.proxyUrl
 
 // 请求 post传参序列化
@@ -23,6 +23,7 @@ axios.interceptors.response.use((response) => {
   console.log('response', response)
   return response
 }, (err) => {
+  console.log('err', err)
   var config = err.config
   // If config does not exist or the retry option is not set, reject
   if (!config || !config.retry) return Promise.reject(err)
@@ -72,7 +73,7 @@ const callApi = (endpoint, fetchOptions, callBack) => {
         return data
       })
   } else {
-    fullUrl += '?platformKey=' + platformKey + '&ua=android&timeStamp=' + new Date().getTime()
+    fullUrl += '?' + getParam(fetchOptions.data)
     return axios.get(fullUrl)
       .then(response => {
         let data = response.data || {}

@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  View,
   StatusBar,
-  AsyncStorage
+  ImageBackground,
+  ToastAndroid,
+  View
 } from "react-native";
 import {
   Container, Header, Button, Content, Text, Form, Item, Input, Label
@@ -15,23 +16,27 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      j_username: '',
-      j_password: '',
+      j_username: 'wede01',
+      j_password: 'abc12345',
       validateCode: '1234'
     };
   }
 
   static navigationOptions = {
-    title: 'Please sign in',
+    // title: 'Please sign in',
+    header: null
   };
 
   _signInAsync = () => {
-    this.props.userLoginIn({...this.state, ua: 'android'}, (res) => {
-      console.log(res)
+    console.log(this.state)
+    let { j_username, j_password, validateCode } = this.state
+    this.props.userLoginIn({ data: { j_username, j_password, validateCode }, cb: (res) => {
       if (res.code === 0) {
         this.props.navigation.navigate('App');
+      } else {
+        ToastAndroid.show(res.message || '网络异常，请稍后重试!', ToastAndroid.SHORT);
       }
-    });
+    }});
     // await AsyncStorage.setItem('userToken', 'abc');
     // this.props.navigation.navigate('App');
   };
@@ -43,10 +48,9 @@ class Login extends React.Component {
   render() {
     let { j_username, j_password } = this.state
     return (
-      <Container>
-        <Header />
+      <ImageBackground source={require('../../resources/images/login_bg.jpg')} style={{width: '100%', height: '100%'}}>
+        <StatusBar barStyle="light-content" backgroundColor="#96cfcf" translucent={false}/>
         <Content>
-          <Text>{j_username}{j_password}</Text>
           <Form>
             <Item inlineLabel>
               <Label>Username</Label>
@@ -63,7 +67,7 @@ class Login extends React.Component {
             <Text>SignIn</Text>
           </Button>
         </Content>
-      </Container>
+      </ImageBackground>
     );
   }
 }

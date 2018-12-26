@@ -2,7 +2,8 @@ import * as ActionTypes from '../actions/actionTypes'
 
 const initState = {
   islogin: true,
-  loginInfo: {}
+  userInfo: {},
+  userBalance: {}
 }
 
 export default user = (state = initState, action) => {
@@ -10,9 +11,11 @@ export default user = (state = initState, action) => {
     case ActionTypes.ISLOGIN_SUCCESS:
       return Object.assign({}, state, {islogin: action.response.code === 0})
     case ActionTypes.USERLOGININ_SUCCESS:
-      return Object.assign({}, state, {loginInfo: action.response.data, islogin: action.response.code === 0})
+      return Object.assign({}, state, {userInfo: action.response.data, islogin: action.response.code === 0})
     case ActionTypes.USERLOGINOUT_SUCCESS:
-      return Object.assign({}, state, {loginInfo: {}, islogin: false})
+      return Object.assign({}, state, {userInfo: {}, islogin: false})
+    case ActionTypes.USERBALANCE_SUCCESS:
+      return Object.assign({}, state, {userBalance: action.response.data.banlance})
     default:
       return state
   }
