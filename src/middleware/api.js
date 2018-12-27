@@ -5,7 +5,6 @@ import { Platform } from 'react-native';
 // axios 配置
 axios.defaults.withCredentials = true
 axios.defaults.timeout = 8000
-axios.defaults.retry = 2
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 // axios.defaults.baseURL = apiConfig.proxyUrl
 
@@ -60,7 +59,12 @@ export const getCaptcha = function() {
   axios.get(captchaImgApi)
 }
 
-const callApi = (endpoint, fetchOptions, callBack) => {
+const callApi = (endpoint, fetchOptions, callBack, retry) => {
+  if (retry >= 0) {
+    axios.defaults.retry = retry
+  } else {
+    axios.defaults.retry = 2
+  }
   fetchOptions.data = Object.assign({}, fetchOptions.data, {platformKey, ua: Platform.OS, timeStamp: new Date().getTime()})
   let fullUrl = API_ROOT + endpoint
   if (fetchOptions.method && fetchOptions.method.toLowerCase() === 'post') {
@@ -96,6 +100,7 @@ export default store => next => action => {
   const { endpoint } = callAPI
   const { fetchOptions } = callAPI
   const { callBack } = callAPI
+  const { retry } = callAPI
 
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.')
@@ -113,7 +118,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, fetchOptions, callBack).then(
+  return callApi(endpoint, fetchOptions, callBack, retry).then(
     response => {
       next(actionWith({
         response,

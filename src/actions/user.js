@@ -24,7 +24,8 @@ const fetchLoginIn = ({data, cb}) => ({
       method: 'POST',
       data
     },
-    callBack: cb
+    callBack: cb,
+    retry: 0
   }
 })
 
@@ -60,4 +61,20 @@ const fetchUserBalance = ({data, cb}) => ({
 
 export const userBalance = ({data, cb}) => (dispatch) => {
   return dispatch(fetchUserBalance({data, cb}))
+}
+
+// 查询平台公告
+const fetchPlatformNotices = ({data, cb}) => ({
+  [CALL_API]: {
+    types: [ActionTypes.PLATFORMNOTICES_REQUEST, ActionTypes.PLATFORMNOTICES_SUCCESS, ActionTypes.PLATFORMNOTICES_FAILURE],
+    endpoint: '/user/notice/queryNoticeList',
+    fetchOptions: {
+      data
+    },
+    callBack: cb
+  }
+})
+
+export const platformNotices = ({data, cb}) => (dispatch) => {
+  return dispatch(fetchPlatformNotices({data, cb}))
 }

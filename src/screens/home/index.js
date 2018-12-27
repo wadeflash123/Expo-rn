@@ -2,7 +2,7 @@ import React from "react";
 import { connect, bindActionCreators } from 'react-redux';
 import { Platform, View, StatusBar, ScrollView, StyleSheet } from "react-native";
 import { Container, Button, H3, Text, Icon } from "native-base";
-import { userBalance } from '../../actions/user';
+import { userBalance, platformNotices } from '../../actions/user';
 // import { DangerZone } from 'expo';
 // let { Lottie } = DangerZone;
 
@@ -25,6 +25,7 @@ class MyHomeScreen extends React.Component {
       StatusBar.setBarStyle('light-content');
       (Platform.OS === 'android') && StatusBar.setBackgroundColor('#6a51ae');
     });
+    this.init()
   }
 
   componentWillUnmount() {
@@ -40,6 +41,12 @@ class MyHomeScreen extends React.Component {
         console.log('balance 2', res)
       }})
     }
+  }
+
+  init = () => {
+    this.props.platformNotices({ cb: (res) => {
+      console.log('notices', res)
+    } })
   }
 
   _playAnimation = () => {
@@ -152,7 +159,8 @@ const mapStateToProps = (state, props) => {
 }
 
 export default connect(mapStateToProps, {
-  userBalance
+  userBalance,
+  platformNotices
 })(MyHomeScreen);
 
 const styles = StyleSheet.create({

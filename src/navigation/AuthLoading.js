@@ -26,7 +26,6 @@ class AuthLoading extends React.Component {
   // 登录状态检测
   _getUserStatus = () => { // async
     this.props.getIsLogin({ cb: (res) => {
-      console.log('res a', res)
       this.setState({
         showIndicator: false
       })

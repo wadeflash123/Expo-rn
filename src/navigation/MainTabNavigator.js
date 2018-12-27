@@ -7,6 +7,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import LinksScreen from '../screens/links/';
 import SettingsScreen from '../screens/set/';
 import OrderDetail from '../screens/orderdetail/';
+import DrawerSiderUser from '../components/DrawerSiderUser';
 
 const HomeScreen = createDrawerNavigator({
   Home: {
@@ -77,6 +78,16 @@ export default createDrawerNavigator({
     screen: OrderDetail,
   },
   }, {
+    contentComponent: DrawerSiderUser,
+    contentOptions: {
+      activeTintColor: '#e91e63',
+      itemsContainerStyle: {
+        marginVertical: 0,
+      },
+      iconContainerStyle: {
+        opacity: 1
+      }
+    },
     drawerType: 'slide'
   }
 );
