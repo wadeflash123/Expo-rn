@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Platform, StatusBar, ScrollView, StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
 // error: Tried to register two views with the same name GestureHandler RootView
 // import { FlatList } from 'react-navigation';
 
 const data = new Array(150).fill(0);
 
-export default class LinksScreen extends React.Component {
+class LinksScreen extends React.Component {
   static navigationOptions = {
     title: 'Links',
   };
@@ -21,10 +22,10 @@ export default class LinksScreen extends React.Component {
     this._navListener.remove();
   }
 
-  renderItem = ({ index }) => {
+  renderItem = ({ item, index }) => {
     return (
       <View style={{ height: 50 }}>
-        <Text style={{ textAlign: 'center' }}>Item {index}</Text>
+        <Text style={{ textAlign: 'center' }}>Item {item.categoryName + index}</Text>
       </View>
     );
   };
@@ -33,15 +34,24 @@ export default class LinksScreen extends React.Component {
     return (
       <SafeAreaView>
         <FlatList
-          data={data}
+          data={this.props.sysLottery}
           renderItem={this.renderItem}
-          keyExtractor={(item, index) => (item + '_' + index)}
+          keyExtractor={(item, index) => (item.categoryCode + '_' + index)}
           contentContainerStyle={{ padding: 10 }}
         />
       </SafeAreaView >
     );
   }
 }
+
+const mapStateToProps = (state, props) => {
+  const { lot } = state
+  return {
+    sysLottery: lot.sysLottery
+  }
+}
+
+export default connect(mapStateToProps, {})(LinksScreen);
 
 const styles = StyleSheet.create({
   container: {

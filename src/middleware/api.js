@@ -10,7 +10,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
 // 请求 post传参序列化
 axios.interceptors.request.use((config) => {
-  console.log('config', config)
+  let { method, retry, url, data } = config
+  console.log('config', { method, retry, url, data })
   return config
 }, (error) => {
   console.warn('错误的传参', error)
@@ -19,7 +20,8 @@ axios.interceptors.request.use((config) => {
 
 // 返回 状态判断
 axios.interceptors.response.use((response) => {
-  console.log('response', response)
+  let { data } = response
+  console.log('response', { data })
   return response
 }, (err) => {
   console.log('err', err)

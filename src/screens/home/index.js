@@ -3,6 +3,7 @@ import { connect, bindActionCreators } from 'react-redux';
 import { Platform, View, StatusBar, ScrollView, StyleSheet } from "react-native";
 import { Container, Button, H3, Text, Icon } from "native-base";
 import { userBalance, platformNotices } from '../../actions/user';
+import { A_sysLottery } from '../../actions/lot';
 // import { DangerZone } from 'expo';
 // let { Lottie } = DangerZone;
 
@@ -46,6 +47,9 @@ class MyHomeScreen extends React.Component {
   init = () => {
     this.props.platformNotices({ cb: (res) => {
       console.log('notices', res)
+    } })
+    this.props.A_sysLottery({ data: { isOuter: 0 }, cb: (res) => {
+      console.log('sysLottery', res)
     } })
   }
 
@@ -160,7 +164,8 @@ const mapStateToProps = (state, props) => {
 
 export default connect(mapStateToProps, {
   userBalance,
-  platformNotices
+  platformNotices,
+  A_sysLottery
 })(MyHomeScreen);
 
 const styles = StyleSheet.create({
