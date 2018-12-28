@@ -11,7 +11,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 // 请求 post传参序列化
 axios.interceptors.request.use((config) => {
   let { method, retry, url, data } = config
-  console.log('config', { method, retry, url, data })
+  // console.log('config', { method, retry, url, data })
   return config
 }, (error) => {
   console.warn('错误的传参', error)
@@ -21,7 +21,7 @@ axios.interceptors.request.use((config) => {
 // 返回 状态判断
 axios.interceptors.response.use((response) => {
   let { data } = response
-  console.log('response', { data })
+  // console.log('response', { data })
   return response
 }, (err) => {
   console.log('err', err)
@@ -61,7 +61,7 @@ export const getCaptcha = function() {
   axios.get(captchaImgApi)
 }
 
-const callApi = (endpoint, fetchOptions, callBack, retry) => {
+const callApi = ({ endpoint, fetchOptions, callBack, retry }) => {
   if (retry >= 0) {
     axios.defaults.retry = retry
   } else {
@@ -120,7 +120,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, fetchOptions, callBack, retry).then(
+  return callApi({ endpoint, fetchOptions, callBack, retry }).then(
     response => {
       next(actionWith({
         response,

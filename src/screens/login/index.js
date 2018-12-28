@@ -4,7 +4,8 @@ import {
   StatusBar,
   ImageBackground,
   ToastAndroid,
-  View
+  View,
+  Platform
 } from "react-native";
 import {
   Container, Header, Button, Content, Text, Form, Item, Input, Label
@@ -42,6 +43,11 @@ class Login extends React.Component {
   };
 
   componentDidMount() {
+    this._navListener = this.props.navigation.addListener('didFocus', () => {
+      StatusBar.setTranslucent(true);
+      StatusBar.setBarStyle('light-content');
+      (Platform.OS === 'android') && StatusBar.setBackgroundColor('transparent');
+    });
     getCaptcha()
   }
 
@@ -49,7 +55,6 @@ class Login extends React.Component {
     let { j_username, j_password } = this.state
     return (
       <ImageBackground source={require('../../resources/images/login_bg.jpg')} style={{width: '100%', height: '100%'}}>
-        <StatusBar barStyle="light-content" backgroundColor="#96cfcf" translucent={false}/>
         <Content>
           <Form>
             <Item inlineLabel>

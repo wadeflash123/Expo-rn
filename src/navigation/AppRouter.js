@@ -11,7 +11,6 @@ export default createStackNavigator({
     },
     OrderList: OrderList
   }, {
-    initialRouteName: 'MainTabNavigator',
-    headerMode: 'none'
+    initialRouteName: 'MainTabNavigator'
   }
 )

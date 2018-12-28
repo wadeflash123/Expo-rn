@@ -5,7 +5,7 @@ import { userLoginOut } from '../../actions/user';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
-    title: 'app.json',
+    title: 'set',
   };
   constructor(props) {
     super(props);
@@ -32,7 +32,6 @@ class SettingsScreen extends React.Component {
      * content, we just wanted to give you a quick view of your config */
     return (
       <View>
-        <Text>Set</Text>
         <Button danger rounded full
           onPress={beerBtnPress}
         >
@@ -44,6 +43,12 @@ class SettingsScreen extends React.Component {
         >
           <Icon name='beer' />
           <Text>set drawer</Text>
+        </Button>
+        <Button danger rounded full
+          onPress={() => this.props.navigation.navigate('OrderList')}
+        >
+          <Icon name='beer' />
+          <Text>LIST A</Text>
         </Button>
       </View>
     );

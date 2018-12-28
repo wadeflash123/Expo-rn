@@ -4,7 +4,7 @@ const initState = {
   islogin: true,
   userInfo: {},
   userBalance: {},
-  platformNotices: []
+  platformNotices: {}
 }
 
 export default user = (state = initState, action) => {

@@ -59,7 +59,7 @@ const fetchUserBalance = ({data, cb}) => ({
   }
 })
 
-export const userBalance = ({data, cb}) => (dispatch) => {
+export const A_userBalance = ({data, cb}) => (dispatch) => {
   return dispatch(fetchUserBalance({data, cb}))
 }
 
@@ -75,6 +75,6 @@ const fetchPlatformNotices = ({data, cb}) => ({
   }
 })
 
-export const platformNotices = ({data, cb}) => (dispatch) => {
+export const A_platformNotices = ({data, cb}) => (dispatch) => {
   return dispatch(fetchPlatformNotices({data, cb}))
 }

@@ -14,6 +14,7 @@ class LinksScreen extends React.Component {
   componentDidMount() {
     this._navListener = this.props.navigation.addListener('didFocus', () => {
       StatusBar.setBarStyle('dark-content');
+      StatusBar.setTranslucent(false);
       (Platform.OS === 'android') && StatusBar.setBackgroundColor('blue');
     });
   }
