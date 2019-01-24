@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Animated, Platform, View, StatusBar, ScrollView, StyleSheet } from "react-native";
 import { Container, Button, H3, Text, Icon } from "native-base";
 import { A_userBalance, A_platformNotices } from '../../actions/user';
+import { A_audioSwitch } from '../../actions/common';
 import { A_sysLottery } from '../../actions/lot';
 // import { DangerZone } from 'expo';
 // let { Lottie } = DangerZone;
@@ -48,7 +49,7 @@ class MyHomeScreen extends React.Component {
 
   init = () => {
     this.props.A_platformNotices({})
-    this.props.A_sysLottery({ data: { isOuter: 0 }})
+    // this.props.A_sysLottery({ data: { isOuter: 0 }})
     this.noticeLoop()
   }
 
@@ -76,6 +77,7 @@ class MyHomeScreen extends React.Component {
 
   beerBtnPress = () => {
     this.props.navigation.openDrawer();
+    this.props.A_audioSwitch(false)
   }
 
   listBtnPress = () => {
@@ -100,7 +102,7 @@ class MyHomeScreen extends React.Component {
 
   render() {
     let { beerBtnPress, listBtnPress } = this
-    let { islogin, platformNotices } = this.props
+    let { islogin, platformNotices, audioSwitch } = this.props
     let { noticeItemOneMT } = this.state
     let notices = platformNotices.pageColumns || []
     // 
@@ -119,6 +121,9 @@ class MyHomeScreen extends React.Component {
         >
           {
             islogin ? <Text>已登录a</Text> : <H3>未登录</H3>
+          }
+          {
+            audioSwitch ? <Text>声音开关开</Text> : <Text>关</Text>
           }
           <View style={{ marginTop: 8 }} />
           <H3>gggg NativeBase components </H3>
@@ -156,19 +161,26 @@ class MyHomeScreen extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-  const { user } = state
+  const { islogin, userInfo, platformNotices } = state.user
+  const { audioSwitch } = state.common
   return {
-    islogin: user.islogin,
-    userInfo: user.userInfo,
-    platformNotices: user.platformNotices
+    islogin,
+    userInfo,
+    platformNotices,
+    audioSwitch
   }
 }
 
-export default connect(mapStateToProps, {
-  A_userBalance,
-  A_platformNotices,
-  A_sysLottery
-})(MyHomeScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    A_userBalance,
+    A_platformNotices,
+    A_sysLottery,
+    A_audioSwitch: (data) => { dispatch(A_audioSwitch(data)) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyHomeScreen);
 
 const styles = StyleSheet.create({
   animationContainer: {

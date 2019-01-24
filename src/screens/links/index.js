@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Platform, StatusBar, ScrollView, StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
+import { A_sysLottery } from '../../actions/lot';
 // error: Tried to register two views with the same name GestureHandler RootView
 // import { FlatList } from 'react-navigation';
 
@@ -12,6 +13,7 @@ class LinksScreen extends React.Component {
   };
   
   componentDidMount() {
+    this.props.A_sysLottery({ data: { isOuter: 0 }})
     this._navListener = this.props.navigation.addListener('didFocus', () => {
       StatusBar.setBarStyle('dark-content');
       StatusBar.setTranslucent(false);
@@ -52,7 +54,9 @@ const mapStateToProps = (state, props) => {
   }
 }
 
-export default connect(mapStateToProps, {})(LinksScreen);
+export default connect(mapStateToProps, {
+  A_sysLottery
+})(LinksScreen);
 
 const styles = StyleSheet.create({
   container: {

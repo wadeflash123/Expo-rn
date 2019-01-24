@@ -122,6 +122,13 @@ export default store => next => action => {
 
   return callApi({ endpoint, fetchOptions, callBack, retry }).then(
     response => {
+      if (response.code === -200012 || response.code === -200010 || response.code === -200011 || response.code === -200014 || response.code === -20000) {
+        next(actionWith({
+          response,
+          type: 'USERLOGINOUT_SUCCESS'
+        }))
+        return
+      }
       next(actionWith({
         response,
         type: successType
